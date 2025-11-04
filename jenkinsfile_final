@@ -41,7 +41,7 @@ pipeline {
         stage('Docker Image') {
             steps {
                 echo 'Docker Image building'
-				sh 'docker build -t devopsengineer189/batch13:${BUILD_NUMBER} .'
+				sh 'docker build -t devopsengineer189/realtimeproject:${BUILD_NUMBER} .'
             }
         }
 		
@@ -52,7 +52,7 @@ pipeline {
             withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                 sh '''
                     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-                    docker push devopsengineer189/batch13:${BUILD_NUMBER}
+                    docker push devopsengineer189/realtimeproject:${BUILD_NUMBER}
                 '''
             }
         }
@@ -73,8 +73,8 @@ pipeline {
 				withCredentials([string(credentialsId: 'githubtoken', variable: 'githubtoken')]) 
 				{
                   sh '''
-                    git config user.email "gorekarmadhu@gmail.com"
-                    git config user.name "Madhu"
+                    git config user.email "ramkirangunturi@gmail.com"
+                    git config user.name "kiran"
                     BUILD_NUMBER=${BUILD_NUMBER}
                     sed -i "s/batch13:.*/batch13:${BUILD_NUMBER}/g" deploymentfiles/deployment.yml
                     git add .
